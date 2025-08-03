@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function updateTickets(occupiedTickets) {
     const allTickets = document.querySelectorAll('[id^="ticket-"]');
-    let availableCount = 100;
+    let availableCount = 120;
     
     allTickets.forEach(ticket => {
         const ticketNumber = parseInt(ticket.id.split('-')[1]);
@@ -31,7 +31,7 @@ function updateTickets(occupiedTickets) {
     });
     
     document.getElementById('available-count').textContent = availableCount;
-    document.getElementById('occupied-count').textContent = 100 - availableCount;
+    document.getElementById('occupied-count').textContent = 120 - availableCount;
 }
 
 function updateLastUpdated(dateString) {
