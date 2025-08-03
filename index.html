@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa de 120 Boletos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .ticket {
+            transition: all 0.2s;
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <h1 class="text-3xl font-bold text-center mb-6 text-blue-800">Rifa de 120 Boletos</h1>
+        
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class="mb-4 text-center">
+                <p class="text-gray-700">Para apartar boletos contáctame al: <span class="font-semibold">844-186-29-12</span></p>
+            </div>
+            
+            <!-- Grid de 10x10 - Todos los números cargados inmediatamente -->
+            <div class="grid grid-cols-10 gap-2 mb-6" id="tickets-grid">
+                <!-- Los números se insertarán aquí con JavaScript -->
+            </div>
+            
+            <div class="flex justify-center gap-6 mt-4">
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-green-500 rounded-full mr-2"></div>
+                    <span class="text-sm">Disponible (<span id="available-count">120</span>)</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-4 h-4 bg-red-500 rounded-full mr-2"></div>
+                    <span class="text-sm">Apartado (<span id="occupied-count">0</span>)</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4 text-center text-sm text-gray-500">
+            <p>Actualizado: <span id="last-update"></span></p>
+        </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            // Pintar todos los boletos
+            const grid = document.getElementById('tickets-grid');
+            grid.innerHTML = ''; // Limpiar
+            
+            let disponibles = 120;
+            
+            for (let i = 1; i <= 120; i++) {
+                const ticket = document.createElement('div');
+                ticket.className = 'ticket flex items-center justify-center h-12 border-2 rounded-lg font-medium ';
+                
+                if (data.occupied.includes(i)) {
+                    ticket.classList.add('bg-red-100', 'border-red-300', 'text-red-800');
+                    disponibles--;
+                } else {
+                    ticket.classList.add('bg-green-100', 'border-green-300', 'text-green-800');
+                }
+                
+                ticket.textContent = i;
+                grid.appendChild(ticket);
+            }
+            
+            // Actualizar contadores
+            document.getElementById('available-count').textContent = disponibles;
+            document.getElementById('occupied-count').textContent = 120 - disponibles;
+            document.getElementById('last-update').textContent = new Date(data.lastUpdated).toLocaleString('es-ES');
+        })
+        .catch(error => {
+            console.error("Error cargando datos:", error);
+            alert("Error al cargar los boletos. Por favor recarga la página.");
+        });
+});
+    </script>
+</body>
+</html>

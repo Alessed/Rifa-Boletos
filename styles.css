@@ -1,0 +1,24 @@
+﻿/* Estilos básicos para la cuadrícula */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* 10 columnas */
+    gap: 10px;
+    margin: 20px;
+}
+
+.boleto {
+    padding: 15px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.disponible {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+}
+
+.ocupado {
+    background-color: #F44336; /* Rojo */
+    color: white;
+}
